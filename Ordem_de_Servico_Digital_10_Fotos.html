@@ -8,7 +8,10 @@
 	</head>
 	<body>
 		<div class="wrap">
-			<h1>ORDEM DE SERVIÇO</h1>
+            <div class="cabecalho">
+                <img src="./mman.png" alt="Logo">
+                <h1>ORDEM DE SERVIÇO</h1>
+            </div>
 			<div class="sub">Controle de Pragas • Limpeza e Manutenção de Sistemas de Água</div>
 			<div class="grid">
 				<div><label>Cliente</label><input class="form-control" id="cliente"></div>
@@ -66,6 +69,17 @@
 				<textarea class="form-control" rows="4"></textarea>
 			</fieldset>
 			<fieldset>
+
+            <div style="margin-top:10px">
+                <button type="button" onclick="adicionarFoto()">
+                    + Adicionar Foto
+                </button>
+
+                <button type="button" class="btn2" onclick="removerFoto()">
+                    − Remover Última
+                </button>
+            </div>
+
                 <legend>Registro Fotográfico</legend>
 
                 <p class="texto-guia">
@@ -74,15 +88,16 @@
 
                 <div id="photo-grid" class="photo-grid"></div>
 
-                <div style="margin-top:10px">
-                    <button type="button" onclick="adicionarFoto()">
-                        + Adicionar Foto
-                    </button>
+            <div style="margin-top:10px">
+                <button type="button" onclick="adicionarFoto()">
+                    + Adicionar Foto
+                </button>
 
-                    <button type="button" class="btn2" onclick="removerFoto()">
-                        − Remover Última
-                    </button>
-                </div>
+                <button type="button" class="btn2" onclick="removerFoto()">
+                    − Remover Última
+                </button>
+            </div>
+            
             </fieldset>
 			<div class="sign">
 				<div class="line">Contratante<br>Recebi os serviços acima descritos</div>
@@ -147,6 +162,7 @@
                 photoGrid.appendChild(
                     criarPhotoBox(quantidadeFotos)
                 );
+
             }
 
             function removerFoto() {

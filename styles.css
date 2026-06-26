@@ -152,3 +152,22 @@ button {
     align-items: center;
     gap: 10px;
 }
+
+.cabecalho {
+    position: relative;
+}
+
+.cabecalho img {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100px; /* ajuste conforme necessário */
+}
+
+.cabecalho h1 {
+    text-align: center;
+    margin: 8px 0 4px;
+    color: #0b2d5c;
+    letter-spacing: 2px;
+}
