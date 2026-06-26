@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Ordem de Serviço com Fotos</title>
+		<style>
+			
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                background: #f3f4f6;
+                color: #111;
+            }
+
+            .wrap {
+                max-width: 900px;
+                margin: auto;
+                background: white;
+                padding: 18px;
+            }
+
+            h1 {
+                text-align: center;
+                margin: 8px 0 4px;
+                color: #0b2d5c;
+                letter-spacing: 2px;
+            }
+
+            .sub {
+                text-align: center;
+                color: #444;
+                margin-bottom: 14px;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            label {
+                font-weight: bold;
+                font-size: 13px;
+            }
+
+            .form-control {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 8px;
+                border: 1px solid #bbb;
+                border-radius: 4px;
+            }
+
+            input[type="checkbox"] {
+                width: 10%;
+            }
+
+            fieldset {
+                border: 1px solid #bbb;
+                margin: 12px 0;
+                padding: 10px;
+            }
+
+            legend {
+                font-weight: bold;
+                color: #0b2d5c;
+            }
+
+            .services {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4px 16px;
+            }
+
+            .photo-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .photo-box {
+                border: 1px solid #aaa;
+                padding: 8px;
+                min-height: 220px;
+                page-break-inside: avoid;
+            }
+
+            .photo-box img {
+                width: 100%;
+                max-height: 260px;
+                object-fit: contain;
+                border: 1px solid #ddd;
+                margin-top: 8px;
+            }
+
+            button {
+                background: #0b2d5c;
+                color: white;
+                border: 0;
+                padding: 10px 14px;
+                border-radius: 5px;
+                margin: 6px 4px;
+                cursor: pointer;
+            }
+
+            .btn2 {
+                background: #777;
+            }
+
+            .sign {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                margin-top: 25px;
+            }
+
+            .line {
+                border-top: 1px solid #111;
+                text-align: center;
+                padding-top: 6px;
+                margin-top: 55px;
+            }
+
+            @media print {
+                body {
+                    background: white;
+                }
+
+                .wrap {
+                    max-width: none;
+                }
+
+                button,
+                input[type="file"] {
+                    display: none;
+                }
+
+                .photo-box {
+                    min-height: auto;
+                }
+            }
+
+            .campo_check {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+            }
+
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<h1>ORDEM DE SERVIÇO</h1>
+			<div class="sub">Controle de Pragas • Limpeza e Manutenção de Sistemas de Água</div>
+			<div class="grid">
+				<div><label>Cliente</label><input class="form-control" id="cliente"></div>
+				<div><label>OS nº</label><input class="form-control" id="os"></div>
+				<div><label>Data</label><input class="form-control" id="data" type="date"></div>
+				<div><label>Unidade/Local</label><input class="form-control" id="unidade"></div>
+				<div><label>Responsável</label><input class="form-control" id="resp"></div>
+				<div><label>Tempo de reentrada após dedetização</label><input class="form-control" id="reentrada" placeholder="____:____ às ____:____"></div>
+			</div>
+			<fieldset>
+				<legend>Serviços Executados</legend>
+				<div class="services">
+					<label class="campo_check">Limpeza de caixa d'água <input type="checkbox""> </label>
+					<label class="campo_check">Reposição de cloro na ETA <input type="checkbox""> </label>
+					<label class="campo_check">Reposição de zeólita <input type="checkbox""> </label>
+					<label class="campo_check">Troca de mangueiras 6mm <input type="checkbox""> </label>
+					<label class="campo_check">Troca filtro PP <input type="checkbox""> </label>
+					<label class="campo_check">Filtro carvão ativado <input type="checkbox""> </label>
+					<label class="campo_check">Limpeza ETA <input type="checkbox""> </label>
+					<label class="campo_check">Dedetização <input type="checkbox""> </label>
+					<label class="campo_check">Desratização <input type="checkbox""> </label>
+					<label class="campo_check">Descupinização <input type="checkbox""> </label>
+					<label class="campo_check">Análise de água <input type="checkbox""> </label>
+					<label class="campo_check">Manejo de pombos / morcegos <input type="checkbox""> </label>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Checklist</legend>
+				<div style="display: flex; justify-content: space-between;">
+                    <p style="width: 300px;">As caixas d'água são interligadas</p>
+                     <div class="campo_check"> <label>Sim</label> <input type="checkbox"" style="width: 50%;" > </div>
+                    <div class="campo_check"> <label>Não</label> <input type="checkbox"" style="width: 50%;" > </div>
+                </div>
+				<div style="display: flex; justify-content: space-between;">
+                    <p style="width: 300px;">Todas as caixas possuem boia?</p>
+                    <div class="campo_check"> <label>Sim</label> <input type="checkbox"" style="width: 50%;" > </div>
+                    <div class="campo_check"> <label>Não</label> <input type="checkbox"" style="width: 50%;" > </div>
+                </div>
+				<div style="display: flex; justify-content: space-between;">
+                    <p style="width: 300px;">Boias compatíveis com a capacidade?</p>
+                    <div class="campo_check"> <label>Sim</label> <input type="checkbox"" style="width: 50%;" > </div>
+                    <div class="campo_check"> <label>Não</label> <input type="checkbox"" style="width: 50%;" > </div>
+                </div>
+				<div style="display: flex; justify-content: space-between;">
+                    <p style="width: 300px;">Todas as caixas possuem ladrão?</p>
+                    <div class="campo_check"> <label>Sim</label> <input type="checkbox"" style="width: 50%;" > </div>
+                    <div class="campo_check"> <label>Não</label> <input type="checkbox"" style="width: 50%;" > </div>
+                </div>
+				<div style="display: flex; justify-content: space-between;">
+                    <p style="width: 300px;">Ladrões possuem tela de proteção?</p>
+                    <div class="campo_check"> <label>Sim</label> <input type="checkbox"" style="width: 50%;" > </div>
+                    <div class="campo_check"> <label>Não</label> <input type="checkbox"" style="width: 50%;" > </div>
+                </div>
+				<label>Observações</label>
+				<textarea class="form-control" rows="4"></textarea>
+			</fieldset>
+			<fieldset>
+				<legend>Registro Fotográfico</legend>
+				<p>Toque em “Tirar/Inserir Foto”. No celular, escolha a câmera. A foto aparecerá automaticamente na OS.</p>
+				<div class="photo-grid">
+					<div class="photo-box"><b>Foto 1 - Antes</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f1')"><img id="f1"></div>
+					<div class="photo-box"><b>Foto 2 - Durante</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f2')"><img id="f2"></div>
+					<div class="photo-box"><b>Foto 3 - Depois</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f3')"><img id="f3"></div>
+					<div class="photo-box"><b>Foto 4 - Detalhe</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f4')"><img id="f4"></div>
+					<div class="photo-box"><b>Foto 5</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f5')"><img id="f5"></div>
+					<div class="photo-box"><b>Foto 6</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f6')"><img id="f6"></div>
+					<div class="photo-box"><b>Foto 7</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f7')"><img id="f7"></div>
+					<div class="photo-box"><b>Foto 8</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f8')"><img id="f8"></div>
+					<div class="photo-box"><b>Foto 9</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f9')"><img id="f9"></div>
+					<div class="photo-box"><b>Foto 10</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f10')"><img id="f10"></div>
+				</div>
+			</fieldset>
+			<div class="sign">
+				<div class="line">Contratante<br>Recebi os serviços acima descritos</div>
+				<div class="line">Contratado<br>Serviços executados conforme descrito</div>
+			</div>
+			<button onclick="window.print()">Gerar PDF / Imprimir</button>
+			<button class="btn2" onclick="limpar()">Limpar formulário</button>
+		</div>
+		<script>
+			function preview(input,id){
+			 const file=input.files[0];
+			 if(!file)return;
+			 const reader=new FileReader();
+			 reader.onload=e=>document.getElementById(id).src=e.target.result;
+			 reader.readAsDataURL(file);
+			}
+			function limpar(){
+			 if(confirm('Limpar todos os campos?')) location.reload();
+			}
+			document.getElementById('data').valueAsDate=new Date();
+		</script>
+	</body>
+</html>
