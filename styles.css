@@ -134,7 +134,16 @@ button {
     .photo-box {
         min-height: auto;
     }
+    
+    .foto-titulo {
+        display: none;
+    }
 
+    .titulo-impressao {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
 }
 
 .campo_check {

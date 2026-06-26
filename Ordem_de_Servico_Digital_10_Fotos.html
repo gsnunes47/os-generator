@@ -66,21 +66,24 @@
 				<textarea class="form-control" rows="4"></textarea>
 			</fieldset>
 			<fieldset>
-				<legend>Registro Fotográfico</legend>
-				<p class="texto-guia">Toque em “Tirar/Inserir Foto”. No celular, escolha a câmera. A foto aparecerá automaticamente na OS.</p>
-				<div class="photo-grid">
-					<div class="photo-box"><b>Foto 1 - Antes</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f1')"><img id="f1"></div>
-					<div class="photo-box"><b>Foto 2 - Durante</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f2')"><img id="f2"></div>
-					<div class="photo-box"><b>Foto 3 - Depois</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f3')"><img id="f3"></div>
-					<div class="photo-box"><b>Foto 4 - Detalhe</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f4')"><img id="f4"></div>
-					<div class="photo-box"><b>Foto 5</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f5')"><img id="f5"></div>
-					<div class="photo-box"><b>Foto 6</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f6')"><img id="f6"></div>
-					<div class="photo-box"><b>Foto 7</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f7')"><img id="f7"></div>
-					<div class="photo-box"><b>Foto 8</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f8')"><img id="f8"></div>
-					<div class="photo-box"><b>Foto 9</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f9')"><img id="f9"></div>
-					<div class="photo-box"><b>Foto 10</b><br><input type="file" accept="image/*" capture="environment" onchange="preview(this,'f10')"><img id="f10"></div>
-				</div>
-			</fieldset>
+                <legend>Registro Fotográfico</legend>
+
+                <p class="texto-guia">
+                    Toque em “Tirar/Inserir Foto”. No celular, escolha a câmera.
+                </p>
+
+                <div id="photo-grid" class="photo-grid"></div>
+
+                <div style="margin-top:10px">
+                    <button type="button" onclick="adicionarFoto()">
+                        + Adicionar Foto
+                    </button>
+
+                    <button type="button" class="btn2" onclick="removerFoto()">
+                        − Remover Última
+                    </button>
+                </div>
+            </fieldset>
 			<div class="sign">
 				<div class="line">Contratante<br>Recebi os serviços acima descritos</div>
 				<div class="line">Contratado<br>Serviços executados conforme descrito</div>
@@ -100,6 +103,67 @@
 			 if(confirm('Limpar todos os campos?')) location.reload();
 			}
 			document.getElementById('data').valueAsDate=new Date();
+
+            function atualizarTitulo(input, id) {
+                document.getElementById(id).textContent = input.value;
+            }
+
+            const photoGrid = document.getElementById("photo-grid");
+
+            let quantidadeFotos = 0;
+
+            function criarPhotoBox(numero) {
+                const div = document.createElement("div");
+
+                div.className = "photo-box";
+
+                div.innerHTML = `
+                    <input
+                        type="text"
+                        class="foto-titulo"
+                        placeholder="Título da foto"
+                        value="Foto ${numero} "
+                        oninput="atualizarTitulo(this,'titulo${numero}')">
+
+                    <b id="titulo${numero}" class="titulo-impressao">
+                        Foto ${numero}
+                    </b>
+
+                    <input
+                        type="file"
+                        accept="image/*"
+                        capture="environment"
+                        onchange="preview(this,'f${numero}')">
+
+                    <img id="f${numero}">
+                `;
+
+                return div;
+            }
+
+            function adicionarFoto() {
+                quantidadeFotos++;
+
+                photoGrid.appendChild(
+                    criarPhotoBox(quantidadeFotos)
+                );
+            }
+
+            function removerFoto() {
+
+                if (quantidadeFotos <= 4) {
+                    return;
+                }
+
+                photoGrid.removeChild(photoGrid.lastElementChild);
+
+                quantidadeFotos--;
+            }
+
+            // Cria as 4 fotos iniciais
+            for (let i = 1; i <= 4; i++) {
+                adicionarFoto();
+            }
 		</script>
 	</body>
 </html>
