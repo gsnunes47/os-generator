@@ -161,8 +161,8 @@ button {
     position: absolute;
     left: 0;
     top: 50%;
-    transform: translateY(-50%);
-    height: 100px; /* ajuste conforme necessário */
+    transform: translateY(-40%);
+    height: 65px; /* ajuste conforme necessário */
 }
 
 .cabecalho h1 {
