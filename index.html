@@ -5,6 +5,8 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<title>Ordem de Serviço com Fotos</title>
 		<link rel="stylesheet" href="styles.css">
+        <link rel="manifest" href="manifest.json">
+        <meta name="theme-color" content="#0b2d5c">
 	</head>
 	<body>
 		<div class="wrap">
@@ -48,18 +50,18 @@
 				<legend>Checklist</legend>
 				<div style="display: flex; justify-content: space-between;">
                     <p style="width: 300px;">As caixas d'água são interligadas</p>
-                     <div class="campo_check"> <label>Sim</label> <input type="checkbox"" style="width: 50%;" > </div>
-                    <div class="campo_check"> <label>Não</label> <input type="checkbox"" style="width: 50%;" > </div>
+                     <div class="campo_check"> <label>Sim</label> <input type="checkbox" style="width: 50%;" > </div>
+                    <div class="campo_check"> <label>Não</label> <input type="checkbox" style="width: 50%;" > </div>
                 </div>
 				<div style="display: flex; justify-content: space-between;">
                     <p style="width: 300px;">Todas as caixas possuem boia?</p>
-                    <div class="campo_check"> <label>Sim</label> <input type="checkbox"" style="width: 50%;" > </div>
-                    <div class="campo_check"> <label>Não</label> <input type="checkbox"" style="width: 50%;" > </div>
+                    <div class="campo_check"> <label>Sim</label> <input type="checkbox" style="width: 50%;" > </div>
+                    <div class="campo_check"> <label>Não</label> <input type="checkbox" style="width: 50%;" > </div>
                 </div>
 				<div style="display: flex; justify-content: space-between;">
                     <p style="width: 300px;">Todas as caixas possuem ladrão?</p>
-                    <div class="campo_check"> <label>Sim</label> <input type="checkbox"" style="width: 50%;" > </div>
-                    <div class="campo_check"> <label>Não</label> <input type="checkbox"" style="width: 50%;" > </div>
+                    <div class="campo_check"> <label>Sim</label> <input type="checkbox" style="width: 50%;" > </div>
+                    <div class="campo_check"> <label>Não</label> <input type="checkbox" style="width: 50%;" > </div>
                 </div>
 				<label>Observações</label>
 				<textarea class="form-control" rows="4"></textarea>
@@ -102,79 +104,6 @@
 			<button onclick="window.print()">Gerar PDF / Imprimir</button>
 			<button class="btn2" onclick="limpar()">Limpar formulário</button>
 		</div>
-		<script>
-			function preview(input,id){
-			 const file=input.files[0];
-			 if(!file)return;
-			 const reader=new FileReader();
-			 reader.onload=e=>document.getElementById(id).src=e.target.result;
-			 reader.readAsDataURL(file);
-			}
-			function limpar(){
-			 if(confirm('Limpar todos os campos?')) location.reload();
-			}
-			document.getElementById('data').valueAsDate=new Date();
-
-            function atualizarTitulo(input, id) {
-                document.getElementById(id).textContent = input.value;
-            }
-
-            const photoGrid = document.getElementById("photo-grid");
-
-            let quantidadeFotos = 0;
-
-            function criarPhotoBox(numero) {
-                const div = document.createElement("div");
-
-                div.className = "photo-box";
-
-                div.innerHTML = `
-                    <input
-                        type="text"
-                        class="foto-titulo"
-                        placeholder="Título da foto"
-                        value="Foto ${numero} "
-                        oninput="atualizarTitulo(this,'titulo${numero}')">
-
-                    <b id="titulo${numero}" class="titulo-impressao">
-                        Foto ${numero}
-                    </b>
-
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onchange="preview(this,'f${numero}')">
-
-                    <img id="f${numero}">
-                `;
-
-                return div;
-            }
-
-            function adicionarFoto() {
-                quantidadeFotos++;
-
-                photoGrid.appendChild(
-                    criarPhotoBox(quantidadeFotos)
-                );
-
-            }
-
-            function removerFoto() {
-
-                if (quantidadeFotos <= 4) {
-                    return;
-                }
-
-                photoGrid.removeChild(photoGrid.lastElementChild);
-
-                quantidadeFotos--;
-            }
-
-            // Cria as 4 fotos iniciais
-            for (let i = 1; i <= 4; i++) {
-                adicionarFoto();
-            }
-		</script>
+        <script src="script.js"></script>   
 	</body>
 </html>
