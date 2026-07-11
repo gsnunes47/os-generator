@@ -277,10 +277,19 @@ button:hover{
     }
 }
 
+fieldset{
+    break-inside:avoid;
+    page-break-inside:avoid;
+}
 
 /* IMPRESSÃO / PDF */
 
 @media print {
+
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
 
     body{
         background:#fff;
@@ -288,11 +297,37 @@ button:hover{
 
     .wrap{
         max-width:none;
+        width:100%;
         margin:0;
         padding:0;
         box-shadow:none;
         border-radius:0;
     }
+
+    .grid{
+        display:grid;
+        grid-template-columns:repeat(2, 1fr);
+    }
+
+    .services{
+        display:grid;
+        grid-template-columns:repeat(2, 1fr);
+    }
+
+    .sign{
+        display:grid;
+        grid-template-columns:repeat(2, 1fr);
+    }
+
+    .photo-grid{
+        display:flex;
+        flex-wrap:wrap;
+    }
+
+    .photo-box{
+        width:calc(50% - 8px);
+    }
+
 
     button,
     input[type=file],
