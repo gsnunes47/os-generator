@@ -215,7 +215,7 @@ button:hover{
 
 /* RESPONSIVO */
 
-@media (max-width:768px){
+@media screen and (max-width:768px){
 
     .wrap{
         margin:0;
@@ -280,14 +280,10 @@ button:hover{
 
 /* IMPRESSÃO / PDF */
 
-@media print{
+@media print {
 
     body{
         background:#fff;
-    }
-
-    .signature-box input{
-      display:none;
     }
 
     .wrap{
@@ -304,32 +300,4 @@ button:hover{
         display:none;
     }
 
-    .photo-grid{
-        display:flex;
-        flex-wrap:wrap;
-        gap:10px;
-    }
-
-    .photo-box{
-        width:calc(50% - 5px);
-        min-height:auto;
-        break-inside:avoid;
-        page-break-inside:avoid;
-    }
-
-    .photo-box img{
-        width:100%;
-        height:auto;
-        max-height:220px;
-    }
-
-    .foto-titulo{
-        display:none;
-    }
-
-    .titulo-impressao{
-        display:block;
-        font-weight:bold;
-        margin-bottom:8px;
-    }
 }
