@@ -83,6 +83,8 @@ legend{
     padding:0 8px;
 }
 
+/* SERVIÇOS */
+
 .services{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -102,28 +104,37 @@ legend{
     cursor:pointer;
 }
 
+
+/* FOTOS */
+
 .photo-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    display:flex;
+    flex-wrap:wrap;
     gap:15px;
 }
 
 .photo-box{
+    width:calc(50% - 8px);
     border:1px solid #ccc;
     border-radius:8px;
     padding:10px;
     min-height:220px;
+    break-inside:avoid;
     page-break-inside:avoid;
 }
 
 .photo-box img{
     width:100%;
-    height:220px;
+    height:auto;
+    max-height:220px;
     object-fit:contain;
     border:1px solid #ddd;
     border-radius:5px;
     margin-top:8px;
 }
+
+
+/* BOTÕES */
 
 button{
     background:#0b2d5c;
@@ -144,6 +155,9 @@ button:hover{
     background:#666;
 }
 
+
+/* ASSINATURA */
+
 .sign{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -158,9 +172,24 @@ button:hover{
     margin-top:60px;
 }
 
-/*==========================
-      RESPONSIVO
-===========================*/
+
+/* CHECKLIST */
+
+.check-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    margin-bottom:12px;
+}
+
+.check-item p{
+    margin:0;
+    flex:1;
+}
+
+
+/* RESPONSIVO */
 
 @media (max-width:768px){
 
@@ -193,8 +222,8 @@ button:hover{
         grid-template-columns:1fr;
     }
 
-    .photo-grid{
-        grid-template-columns:1fr;
+    .photo-box{
+        width:100%;
     }
 
     .sign{
@@ -215,15 +244,17 @@ button:hover{
     }
 
     .photo-box img{
-        height:auto;
         max-height:350px;
     }
 
+    .check-item{
+        flex-direction:column;
+        align-items:flex-start;
+    }
 }
 
-/*==========================
-        IMPRESSÃO
-===========================*/
+
+/* IMPRESSÃO / PDF */
 
 @media print{
 
@@ -245,8 +276,23 @@ button:hover{
         display:none;
     }
 
+    .photo-grid{
+        display:flex;
+        flex-wrap:wrap;
+        gap:10px;
+    }
+
     .photo-box{
+        width:calc(50% - 5px);
         min-height:auto;
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    .photo-box img{
+        width:100%;
+        height:auto;
+        max-height:220px;
     }
 
     .foto-titulo{
@@ -258,27 +304,4 @@ button:hover{
         font-weight:bold;
         margin-bottom:8px;
     }
-
-}
-
-.check-item{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-    margin-bottom:12px;
-}
-
-.check-item p{
-    margin:0;
-    flex:1;
-}
-
-@media(max-width:768px){
-
-    .check-item{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
 }
