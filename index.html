@@ -97,9 +97,43 @@
             
             </fieldset>
 			<div class="sign">
-				<div class="line">Contratante<br>Recebi os serviços acima descritos</div>
-				<div class="line">Contratado<br>Serviços executados conforme descrito</div>
-			</div>
+
+                <div class="signature-box">
+                    <label>Assinatura do Contratante</label>
+
+                    <input 
+                        type="file" 
+                        accept="image/*" 
+                        capture="environment"
+                        onchange="carregarAssinatura(event, 'assinatura-cliente')"
+                    >
+
+                    <img id="assinatura-cliente">
+                    
+                    <p>
+                        Recebi os serviços acima descritos
+                    </p>
+                </div>
+
+
+                <div class="signature-box">
+                    <label>Assinatura do Contratado</label>
+
+                    <input 
+                        type="file" 
+                        accept="image/*" 
+                        capture="environment"
+                        onchange="carregarAssinatura(event, 'assinatura-tecnico')"
+                    >
+
+                    <img id="assinatura-tecnico">
+
+                    <p>
+                        Serviços executados conforme descrito
+                    </p>
+                </div>
+
+            </div>
 			<button onclick="window.print()">Gerar PDF / Imprimir</button>
 			<button class="btn2" onclick="limpar()">Limpar formulário</button>
 		</div>
