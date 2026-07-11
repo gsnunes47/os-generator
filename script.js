@@ -77,3 +77,15 @@ if ("serviceWorker" in navigator) {
         .then(() => console.log("Service Worker registrado."));
     });
 }
+
+function carregarAssinatura(event, idImagem){
+
+    const arquivo = event.target.files[0];
+
+    if(!arquivo) return;
+
+    const img = document.getElementById(idImagem);
+
+    img.src = URL.createObjectURL(arquivo);
+    img.style.display = "block";
+}
