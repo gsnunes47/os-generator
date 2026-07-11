@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <input
                 type="file"
                 accept="image/*"
-                capture="environment"
                 onchange="preview(this,'f${numero}')">
 
             <img id="f${numero}">
