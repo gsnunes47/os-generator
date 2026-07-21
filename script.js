@@ -135,6 +135,41 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
+    let tituloOriginal = document.title;
+
+
+    function prepararImpressao(){
+
+        document.querySelectorAll(".photo-box").forEach((photoBox) => {
+            const imagem = photoBox.querySelector("img");
+            photoBox.classList.toggle("oculto-impressao", !imagem?.getAttribute("src"));
+        });
+
+        const campoObservacoes = document.getElementById("campo-observacoes");
+        const observacoes = document.getElementById("observacoes");
+
+        campoObservacoes.classList.toggle(
+            "oculto-impressao",
+            !observacoes.value.trim(),
+        );
+
+        tituloOriginal = document.title;
+        document.title = " ";
+
+    }
+
+
+    function restaurarAposImpressao(){
+
+        document.title = tituloOriginal;
+
+    }
+
+
+    window.addEventListener("beforeprint", prepararImpressao);
+    window.addEventListener("afterprint", restaurarAposImpressao);
+
+
 });
 
 

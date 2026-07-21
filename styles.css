@@ -282,7 +282,7 @@ button{
 
     @page{
         size:A4;
-        margin:10mm;
+        margin:0;
     }
 
 
@@ -295,16 +295,29 @@ button{
         width:100%;
         max-width:none;
         margin:0;
-        padding:0;
+        padding:10mm;
         box-shadow:none;
         border-radius:0;
     }
 
 
+    .oculto-impressao{
+        display:none !important;
+    }
+
+
     button,
     input[type=file],
+    .foto-titulo,
     .texto-guia{
         display:none;
+    }
+
+
+    /* Mantém os dados da OS na primeira página e inicia as fotos na seguinte. */
+    fieldset:has(.photo-grid){
+        break-before:page;
+        page-break-before:always;
     }
 
 
@@ -335,6 +348,8 @@ button{
 
     .photo-box{
         width:calc(50% - 5px);
+        break-inside:avoid;
+        page-break-inside:avoid;
     }
 
 
@@ -352,11 +367,14 @@ button{
 
     .signature-box{
         margin-top:20px;
+        break-inside:avoid;
+        page-break-inside:avoid;
     }
 
 
     .signature-box img{
-        max-height:70px;
+        height:120px;
+        max-height:120px;
     }
 
 }
