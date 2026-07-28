@@ -298,6 +298,43 @@ button{
     }
 
 
+    .ios body{
+        font-size:12px;
+    }
+
+
+    .ios label{
+        margin-bottom:2px;
+        font-size:11px;
+    }
+
+
+    .ios .form-control{
+        min-height:0;
+        padding:4px 6px;
+        border-radius:3px;
+        font-size:12px;
+        line-height:1.2;
+    }
+
+
+    .ios input.form-control{
+        height:7mm;
+    }
+
+
+    .ios textarea.form-control{
+        height:15mm;
+        min-height:15mm;
+    }
+
+
+    .ios .campo_check input[type="checkbox"]{
+        width:4mm;
+        height:4mm;
+    }
+
+
     .wrap{
         width:100%;
         max-width:none;
@@ -321,10 +358,14 @@ button{
     }
 
 
-    /* Seletor explícito para o WebKit do iOS não depender de :has() ao imprimir. */
+    /* Mantém os dados da OS na primeira página e inicia as fotos na seguinte. */
     .registro-fotografico{
         break-before:page;
         page-break-before:always;
+    }
+
+
+    .ios .registro-fotografico{
         border:0;
         padding:0;
     }
@@ -338,7 +379,13 @@ button{
     }
 
 
-    fieldset:not(.registro-fotografico){
+    .ios fieldset{
+        margin:6px 0;
+        padding:6px;
+    }
+
+
+    .ios fieldset:not(.registro-fotografico){
         break-inside:avoid;
         page-break-inside:avoid;
     }
@@ -350,39 +397,70 @@ button{
     }
 
 
+    .ios .grid{
+        gap:6px 10px;
+    }
+
+
     .services{
         grid-template-columns:repeat(2,1fr);
         gap:5px 15px;
     }
 
 
+    .ios .services{
+        gap:2px 10px;
+    }
+
+
     .photo-grid{
+        gap:10px;
+    }
+
+
+    .ios .photo-grid{
         display:block;
         font-size:0;
     }
 
 
     .photo-box{
+        width:calc(50% - 5px);
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+
+    .ios .photo-box{
         display:inline-block;
         width:48%;
         margin:0 1% 4mm;
         font-size:14px;
         vertical-align:top;
-        break-inside:avoid;
-        page-break-inside:avoid;
         -webkit-column-break-inside:avoid;
     }
 
 
     .photo-box img{
+        max-height:180px;
+    }
+
+
+    .ios .photo-box img{
         display:block;
         max-height:58mm;
     }
 
 
     .sign{
-        display:block;
         margin-top:20px;
+        grid-template-columns:repeat(2,1fr);
+        gap:30px;
+    }
+
+
+    .ios .sign{
+        display:block;
         font-size:0;
         break-inside:avoid;
         page-break-inside:avoid;
@@ -390,13 +468,18 @@ button{
 
 
     .signature-box{
+        margin-top:20px;
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+
+    .ios .signature-box{
         display:inline-block;
         width:48%;
         margin:20px 1% 0;
         font-size:14px;
         vertical-align:top;
-        break-inside:avoid;
-        page-break-inside:avoid;
     }
 
 

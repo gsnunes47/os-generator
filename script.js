@@ -3,6 +3,11 @@ console.log("script.js carregado");
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    const ehIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+    document.documentElement.classList.toggle("ios", ehIOS);
+
     document.getElementById("data").valueAsDate = new Date();
 
     const photoGrid = document.getElementById("photo-grid");
@@ -166,7 +171,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.imprimir = function(){
 
-        prepararImpressao();
+        if(ehIOS){
+            prepararImpressao();
+        }
+
         window.print();
 
     };
