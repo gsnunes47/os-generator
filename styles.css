@@ -321,10 +321,12 @@ button{
     }
 
 
-    /* Mantém os dados da OS na primeira página e inicia as fotos na seguinte. */
-    fieldset:has(.photo-grid){
+    /* Seletor explícito para o WebKit do iOS não depender de :has() ao imprimir. */
+    .registro-fotografico{
         break-before:page;
         page-break-before:always;
+        border:0;
+        padding:0;
     }
 
 
@@ -333,6 +335,12 @@ button{
         padding:10px;
         break-inside:auto;
         page-break-inside:auto;
+    }
+
+
+    fieldset:not(.registro-fotografico){
+        break-inside:avoid;
+        page-break-inside:avoid;
     }
 
 
@@ -349,31 +357,44 @@ button{
 
 
     .photo-grid{
-        gap:10px;
+        display:block;
+        font-size:0;
     }
 
 
     .photo-box{
-        width:calc(50% - 5px);
+        display:inline-block;
+        width:48%;
+        margin:0 1% 4mm;
+        font-size:14px;
+        vertical-align:top;
+        break-inside:avoid;
+        page-break-inside:avoid;
+        -webkit-column-break-inside:avoid;
+    }
+
+
+    .photo-box img{
+        display:block;
+        max-height:58mm;
+    }
+
+
+    .sign{
+        display:block;
+        margin-top:20px;
+        font-size:0;
         break-inside:avoid;
         page-break-inside:avoid;
     }
 
 
-    .photo-box img{
-        max-height:180px;
-    }
-
-
-    .sign{
-        margin-top:20px;
-        grid-template-columns:repeat(2,1fr);
-        gap:30px;
-    }
-
-
     .signature-box{
-        margin-top:20px;
+        display:inline-block;
+        width:48%;
+        margin:20px 1% 0;
+        font-size:14px;
+        vertical-align:top;
         break-inside:avoid;
         page-break-inside:avoid;
     }

@@ -136,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     let tituloOriginal = document.title;
+    let impressaoPreparada = false;
 
 
     function prepararImpressao(){
@@ -153,15 +154,28 @@ document.addEventListener("DOMContentLoaded", () => {
             !observacoes.value.trim(),
         );
 
-        tituloOriginal = document.title;
+        if(!impressaoPreparada){
+            tituloOriginal = document.title;
+            impressaoPreparada = true;
+        }
+
         document.title = " ";
 
     }
 
 
+    window.imprimir = function(){
+
+        prepararImpressao();
+        window.print();
+
+    };
+
+
     function restaurarAposImpressao(){
 
         document.title = tituloOriginal;
+        impressaoPreparada = false;
 
     }
 
