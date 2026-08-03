@@ -103,14 +103,20 @@
                 <div class="signature-box">
                     <label>Assinatura do Contratante</label>
 
-                    <input 
-                        type="file" 
-                        accept="image/*" 
-                        capture="environment"
-                        onchange="carregarAssinatura(event, 'assinatura-cliente')"
-                    >
+                    <button type="button" class="assinatura-abrir" onclick="abrirAssinatura('assinatura-cliente')">
+                        Assinar
+                    </button>
 
                     <img id="assinatura-cliente">
+
+                    <label for="nome-assinante-cliente" class="assinatura-nome-label">Nome do assinante</label>
+                    <input
+                        type="text"
+                        id="nome-assinante-cliente"
+                        class="form-control assinatura-nome"
+                        oninput="atualizarTitulo(this,'nome-assinante-cliente-impressao')"
+                    >
+                    <b id="nome-assinante-cliente-impressao" class="assinatura-nome-impressao"></b>
                     
                     <p>
                         Recebi os serviços acima descritos
@@ -121,14 +127,20 @@
                 <div class="signature-box">
                     <label>Assinatura do Contratado</label>
 
-                    <input 
-                        type="file" 
-                        accept="image/*" 
-                        capture="environment"
-                        onchange="carregarAssinatura(event, 'assinatura-tecnico')"
-                    >
+                    <button type="button" class="assinatura-abrir" onclick="abrirAssinatura('assinatura-tecnico')">
+                        Assinar
+                    </button>
 
                     <img id="assinatura-tecnico">
+
+                    <label for="nome-assinante-tecnico" class="assinatura-nome-label">Nome do assinante</label>
+                    <input
+                        type="text"
+                        id="nome-assinante-tecnico"
+                        class="form-control assinatura-nome"
+                        oninput="atualizarTitulo(this,'nome-assinante-tecnico-impressao')"
+                    >
+                    <b id="nome-assinante-tecnico-impressao" class="assinatura-nome-impressao"></b>
 
                     <p>
                         Serviços executados conforme descrito
@@ -139,6 +151,23 @@
 			<button onclick="imprimir()">Gerar PDF / Imprimir</button>
 			<button class="btn2" onclick="limpar()">Limpar formulário</button>
 		</div>
+        <div id="modal-assinatura" class="modal-assinatura" aria-hidden="true">
+            <div class="assinatura-painel" role="dialog" aria-modal="true" aria-labelledby="assinatura-modal-titulo">
+                <div class="assinatura-cabecalho">
+                    <h2 id="assinatura-modal-titulo">Desenhe a assinatura</h2>
+                    <span>Use o dedo, uma caneta ou o mouse.</span>
+                </div>
+                <div class="assinatura-area">
+                    <canvas id="assinatura-canvas"></canvas>
+                </div>
+                <div class="assinatura-acoes">
+                    <button type="button" class="btn2" onclick="limparCanvasAssinatura()">Limpar</button>
+                    <button type="button" class="btn2" onclick="fecharAssinatura()">Cancelar</button>
+                    <button type="button" onclick="salvarAssinatura()">Salvar assinatura</button>
+                </div>
+            </div>
+        </div>
+
 		<footer class="versao oculto-impressao">Versão 1.2</footer>
         <script src="script.js"></script>   
 	</body>

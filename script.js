@@ -114,31 +114,238 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    window.carregarAssinatura = function(event, idImagem){
+    const modalAssinatura = document.getElementById("modal-assinatura");
+    const canvasAssinatura = document.getElementById("assinatura-canvas");
+    const contextoAssinatura = canvasAssinatura.getContext("2d");
 
-        const arquivo = event.target.files[0];
-
-        if(!arquivo) return;
-
-
-        const reader = new FileReader();
+    let alvoAssinatura = null;
+    let desenhandoAssinatura = false;
+    let assinaturaDesenhada = false;
+    let redimensionamentoAssinatura = null;
 
 
-        reader.onload = (e)=>{
+    function configurarPincelAssinatura(){
 
-            const img = document.getElementById(idImagem);
+        const proporcao = window.devicePixelRatio || 1;
 
-            img.src = e.target.result;
+        contextoAssinatura.setTransform(proporcao, 0, 0, proporcao, 0, 0);
+        contextoAssinatura.strokeStyle = "#111";
+        contextoAssinatura.lineWidth = 3;
+        contextoAssinatura.lineCap = "round";
+        contextoAssinatura.lineJoin = "round";
 
-            img.style.display="block";
+    }
 
+
+    function redimensionarCanvasAssinatura(preservarConteudo = true){
+
+        const area = canvasAssinatura.getBoundingClientRect();
+
+        if(!area.width || !area.height) return;
+
+        let copia = null;
+
+        if(preservarConteudo && canvasAssinatura.width && canvasAssinatura.height){
+            copia = document.createElement("canvas");
+            copia.width = canvasAssinatura.width;
+            copia.height = canvasAssinatura.height;
+            copia.getContext("2d").drawImage(canvasAssinatura, 0, 0);
+        }
+
+        const proporcao = window.devicePixelRatio || 1;
+
+        canvasAssinatura.width = Math.round(area.width * proporcao);
+        canvasAssinatura.height = Math.round(area.height * proporcao);
+        configurarPincelAssinatura();
+
+        if(copia){
+            contextoAssinatura.drawImage(
+                copia,
+                0,
+                0,
+                copia.width,
+                copia.height,
+                0,
+                0,
+                area.width,
+                area.height,
+            );
+        }
+
+    }
+
+
+    function carregarAssinaturaNoCanvas(){
+
+        redimensionarCanvasAssinatura(false);
+        assinaturaDesenhada = Boolean(alvoAssinatura?.getAttribute("src"));
+
+        if(!assinaturaDesenhada) return;
+
+        const imagem = new Image();
+
+        imagem.onload = () => {
+            const area = canvasAssinatura.getBoundingClientRect();
+            const escala = Math.min(area.width / imagem.width, area.height / imagem.height);
+            const largura = imagem.width * escala;
+            const altura = imagem.height * escala;
+
+            contextoAssinatura.drawImage(
+                imagem,
+                (area.width - largura) / 2,
+                (area.height - altura) / 2,
+                largura,
+                altura,
+            );
         };
 
+        imagem.src = alvoAssinatura.src;
 
-        reader.readAsDataURL(arquivo);
+    }
+
+
+    function pontoDaAssinatura(event){
+
+        const area = canvasAssinatura.getBoundingClientRect();
+
+        return {
+            x: event.clientX - area.left,
+            y: event.clientY - area.top,
+        };
+
+    }
+
+
+    canvasAssinatura.addEventListener("pointerdown", (event) => {
+        const ponto = pontoDaAssinatura(event);
+
+        event.preventDefault();
+        canvasAssinatura.setPointerCapture(event.pointerId);
+        contextoAssinatura.beginPath();
+        contextoAssinatura.moveTo(ponto.x, ponto.y);
+        contextoAssinatura.lineTo(ponto.x, ponto.y);
+        contextoAssinatura.stroke();
+        desenhandoAssinatura = true;
+        assinaturaDesenhada = true;
+    });
+
+
+    canvasAssinatura.addEventListener("pointermove", (event) => {
+        if(!desenhandoAssinatura) return;
+
+        const ponto = pontoDaAssinatura(event);
+
+        event.preventDefault();
+        contextoAssinatura.lineTo(ponto.x, ponto.y);
+        contextoAssinatura.stroke();
+    });
+
+
+    function finalizarTracoAssinatura(){
+        if(!desenhandoAssinatura) return;
+
+        contextoAssinatura.closePath();
+        desenhandoAssinatura = false;
+    }
+
+
+    canvasAssinatura.addEventListener("pointerup", finalizarTracoAssinatura);
+    canvasAssinatura.addEventListener("pointercancel", finalizarTracoAssinatura);
+
+
+    window.abrirAssinatura = async function(idImagem){
+
+        alvoAssinatura = document.getElementById(idImagem);
+        modalAssinatura.classList.add("ativo");
+        modalAssinatura.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-assinatura-aberta");
+
+        const dispositivoAndroid = /Android/i.test(navigator.userAgent);
+
+        if(dispositivoAndroid){
+            try{
+                if(!document.fullscreenElement && modalAssinatura.requestFullscreen){
+                    await modalAssinatura.requestFullscreen();
+                }
+
+                if(screen.orientation?.lock){
+                    await screen.orientation.lock("landscape");
+                }
+            }catch(error){
+                console.info("Orientação landscape não pôde ser bloqueada.", error);
+            }
+        }
+
+        requestAnimationFrame(carregarAssinaturaNoCanvas);
 
     };
 
+
+    window.limparCanvasAssinatura = function(){
+
+        const area = canvasAssinatura.getBoundingClientRect();
+        contextoAssinatura.clearRect(0, 0, area.width, area.height);
+        assinaturaDesenhada = false;
+
+    };
+
+
+    async function encerrarModalAssinatura(){
+
+        modalAssinatura.classList.remove("ativo");
+        modalAssinatura.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-assinatura-aberta");
+        desenhandoAssinatura = false;
+
+        try{
+            screen.orientation?.unlock?.();
+        }catch(error){
+            console.info("A orientação da tela não precisou ser desbloqueada.", error);
+        }
+
+        if(document.fullscreenElement === modalAssinatura && document.exitFullscreen){
+            await document.exitFullscreen().catch(() => {});
+        }
+
+    }
+
+
+    window.fecharAssinatura = function(){
+        return encerrarModalAssinatura();
+    };
+
+
+    window.salvarAssinatura = function(){
+
+        if(assinaturaDesenhada){
+            alvoAssinatura.src = canvasAssinatura.toDataURL("image/png");
+            alvoAssinatura.style.display = "block";
+        }else{
+            alvoAssinatura.removeAttribute("src");
+            alvoAssinatura.style.display = "none";
+        }
+
+        return encerrarModalAssinatura();
+
+    };
+
+
+    window.addEventListener("resize", () => {
+        if(!modalAssinatura.classList.contains("ativo")) return;
+
+        clearTimeout(redimensionamentoAssinatura);
+        redimensionamentoAssinatura = setTimeout(
+            () => redimensionarCanvasAssinatura(true),
+            150,
+        );
+    });
+
+
+    document.addEventListener("keydown", (event) => {
+        if(event.key === "Escape" && modalAssinatura.classList.contains("ativo")){
+            fecharAssinatura();
+        }
+    });
 
     let tituloOriginal = document.title;
     let impressaoPreparada = false;
