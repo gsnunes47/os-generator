@@ -261,6 +261,20 @@ legend{
     page-break-inside:avoid;
 }
 
+.foto-acoes{
+    display:flex;
+    gap:8px;
+    margin-top:8px;
+}
+
+.foto-acoes button{
+    flex:1;
+}
+
+.foto-input{
+    display:none;
+}
+
 .photo-box img{
     width:100%;
     height:auto;
@@ -593,8 +607,8 @@ button{
 
 
     .signature-box img{
-        height:120px;
-        max-height:120px;
+        height:180px;
+        max-height:160px;
     }
 
 }

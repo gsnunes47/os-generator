@@ -68,10 +68,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 Foto ${numero}
             </b>
 
-            <input
-                type="file"
-                accept="image/*"
-                onchange="preview(this,'f${numero}')">
+            <div class="foto-acoes">
+                <button
+                    type="button"
+                    onclick="document.getElementById('galeria${numero}').click()">
+                    Galeria
+                </button>
+
+                <button
+                    type="button"
+                    class="btn2"
+                    onclick="document.getElementById('camera${numero}').click()">
+                    Câmera
+                </button>
+
+                <input
+                    id="galeria${numero}"
+                    class="foto-input"
+                    type="file"
+                    accept="image/*"
+                    onchange="preview(this,'f${numero}')">
+
+                <input
+                    id="camera${numero}"
+                    class="foto-input"
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    onchange="preview(this,'f${numero}')">
+            </div>
 
             <img id="f${numero}">
         `;
