@@ -1,4 +1,4 @@
-const CACHE_NAME = "os-v13";
+const CACHE_NAME = "os-v14";
 
 const FILES = [
   "./",

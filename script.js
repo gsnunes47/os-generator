@@ -19,15 +19,96 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const file = input.files[0];
 
-        if (!file) return;
+        if(!file) return;
 
-        const reader = new FileReader();
+        const limiteArquivo = 25 * 1024 * 1024;
+        const limiteDimensao = 1600;
 
-        reader.onload = (e) => {
-            document.getElementById(id).src = e.target.result;
+        if(file.type && !file.type.startsWith("image/")){
+            alert("O arquivo selecionado não é uma imagem válida.");
+            input.value = "";
+            return;
+        }
+
+        if(file.size > limiteArquivo){
+            alert("A imagem é muito grande. Selecione uma foto de até 25 MB.");
+            input.value = "";
+            return;
+        }
+
+        const urlTemporaria = URL.createObjectURL(file);
+        const imagemOriginal = new Image();
+
+        function finalizarLeitura(){
+            imagemOriginal.onload = null;
+            imagemOriginal.onerror = null;
+            URL.revokeObjectURL(urlTemporaria);
+            imagemOriginal.removeAttribute("src");
+            input.value = "";
+        }
+
+        function informarFalha(){
+            finalizarLeitura();
+            alert(
+                "Não foi possível abrir esta imagem. " +
+                "Tente outra foto ou converta o arquivo para JPEG.",
+            );
+        }
+
+        imagemOriginal.onload = () => {
+            try{
+                const larguraOriginal = imagemOriginal.naturalWidth;
+                const alturaOriginal = imagemOriginal.naturalHeight;
+
+                if(!larguraOriginal || !alturaOriginal){
+                    informarFalha();
+                    return;
+                }
+
+                const escala = Math.min(
+                    1,
+                    limiteDimensao / Math.max(larguraOriginal, alturaOriginal),
+                );
+
+                const largura = Math.max(1, Math.round(larguraOriginal * escala));
+                const altura = Math.max(1, Math.round(alturaOriginal * escala));
+                const canvas = document.createElement("canvas");
+                const contexto = canvas.getContext("2d");
+
+                canvas.width = largura;
+                canvas.height = altura;
+                contexto.fillStyle = "#fff";
+                contexto.fillRect(0, 0, largura, altura);
+                contexto.drawImage(imagemOriginal, 0, 0, largura, altura);
+
+                finalizarLeitura();
+
+                canvas.toBlob((imagemOtimizada) => {
+                    if(!imagemOtimizada){
+                        alert("Não foi possível otimizar esta imagem.");
+                        return;
+                    }
+
+                    const reader = new FileReader();
+
+                    reader.onload = (event) => {
+                        document.getElementById(id).src = event.target.result;
+                    };
+
+                    reader.onerror = () => {
+                        alert("Não foi possível carregar a imagem otimizada.");
+                    };
+
+                    reader.readAsDataURL(imagemOtimizada);
+                }, "image/jpeg", 0.82);
+            }catch(error){
+                console.error("Falha ao processar a imagem.", error);
+                informarFalha();
+            }
         };
 
-        reader.readAsDataURL(file);
+        imagemOriginal.onerror = informarFalha;
+        imagemOriginal.src = urlTemporaria;
     }
 
 
